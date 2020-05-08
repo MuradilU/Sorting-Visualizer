@@ -2,7 +2,9 @@
   <div>
       <h1>Sorting Visualizer</h1>
       <input type="radio" id="bubble" name="sortAlgorithm" value="bubble" v-model="sortAlgorithm">
-      <label for="bubble">Bubble Sort</label><br>
+      <label for="bubble">Bubble Sort</label>
+      <input type="radio" id="merge" name="sortAlgorithm" value="merge" v-model="sortAlgorithm">
+      <label for="merge">Merge Sort</label><br>
       <label for="length">Array Length</label><br>
       <input type="range" id="length" min="5" max="200" v-model="arrayLength"><br>
       <button @click="sort">Sort</button><br>
@@ -31,6 +33,7 @@
 
 <script>
 import bubbleSort from '../algorithms/bubbleSort'
+import mergeSort from '../algorithms/mergeSort'
 
 export default {
     name: 'SortingVisualizer',
@@ -61,6 +64,9 @@ export default {
             switch(this.sortAlgorithm) {
                 case 'bubble':
                     await bubbleSort(this.array);
+                    break;
+                case 'merge':
+                    await mergeSort(this.array, 0, this.array.length - 1);
                     break;
             }
         }
