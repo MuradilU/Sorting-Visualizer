@@ -33,6 +33,6 @@ export default {
 }
 .bar {
   display: inline-block;
-  background-color: coral;
+  /* background-color: coral; */
 }
 </style>

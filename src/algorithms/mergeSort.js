@@ -1,3 +1,5 @@
+import { replace } from '../utils/mutators'
+
 async function mergeSort(array, left, right) {
     if (right > left) {
         let mid = Math.floor((left + right) / 2);
@@ -32,15 +34,6 @@ async function replaceSubArray(array, start, subArray) {
         await replace(array, start, subArray.shift());
         start++;
     }
-}
-
-function replace(array, index, value) {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            array.splice(index, 1, value);
-            resolve(array);
-        }, 1)
-    });
 }
 
 export default mergeSort;

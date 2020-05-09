@@ -1,3 +1,5 @@
+import { swap } from '../utils/mutators'
+
 async function bubbleSort(array) {
     var length = array.length
     for (var i = 0; i < length; i++) {
@@ -9,17 +11,6 @@ async function bubbleSort(array) {
     }
 
     return array;
-}
-
-function swap(array, left, right) {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            var temp = array[left];
-            array.splice(left, 1, array[right]);
-            array.splice(right, 1, temp);
-            resolve(array);
-        }, 1)
-    });
 }
 
 export default bubbleSort;
