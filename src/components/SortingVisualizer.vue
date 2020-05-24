@@ -1,13 +1,18 @@
 <template>
   <div>
-      <h1>Sorting Visualizer</h1>
-      <div v-for="(algorithm, i) in algorithms" :key="i">
-          <input type="radio" :id="algorithm.id" name="sortAlgorithm" :value="algorithm.id" v-model="sortAlgorithm">
-          <label :for="algorithm.id">{{ algorithm.name }}</label>
+      <div class="nav">
+        <!-- <span class="title">Sorting Visualizer</span> -->
+        <div class="sort-alg" v-for="(algorithm, i) in algorithms" :key="i">
+            <input class="sort-checkbox" type="radio" :id="algorithm.id" name="sortAlgorithm" :value="algorithm.id" v-model="sortAlgorithm">
+            <label class="sort-label" :for="algorithm.id">{{ algorithm.name }}</label>
+        </div>
+        <span class="slider-label">Length and Speed:</span>
+        <div class="slider-container">
+            <input class="slider" type="range" id="length" min="5" max="200" v-model="arrayLength">
+        </div>
+        <button class="reset" @click="initVisualizer">Reset</button>
+        <button class="sort" @click="sort" :disabled="sorting">Sort</button>
       </div>
-      <label for="length">Array Length</label><br>
-      <input type="range" id="length" min="5" max="200" v-model="arrayLength"><br>
-      <button @click="sort">Sort</button><br>
       <div
         class="visualizer-container"
         :style="{
@@ -42,6 +47,7 @@ export default {
     data: function() {
         return {
             sortAlgorithm: 'bubble',
+            sorting: false,
             algorithms: [
                 { id: 'bubble', name: 'Bubble Sort' },
                 { id: 'merge', name: 'Merge Sort' },
@@ -55,11 +61,13 @@ export default {
             heightScale: Number,
             barWidth: Number,
             arrayLength: 20,
+            sortSpeed: 0,
             margin: Number,
             colorMap: new Map([
                 ['comparing', '#80FF72'],
                 ['replacing', '#E63946'],
-                ['regular', '#58e4f3']
+                ['searching', '#0099ff'],
+                ['regular', '#FF69B4']
             ])
         }
     },
@@ -68,29 +76,39 @@ export default {
     },
     methods: {
         initVisualizer: function() {
+            this.sorting = false;
+
+            // Init random array
             this.array = [...Array(this.arrayLength)].map(() => Math.ceil(Math.random() * this.arrayLength));
             this.colorArray = [...Array(this.arrayLength)].map(() => this.colorMap.get('regular'));
-            // this.array = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+
+            // Scale the bar width and height using the current array length
             var max = Math.max(...this.array);
             this.heightScale = this.containerHeight / max;
             this.barWidth = this.containerWidth / this.array.length;
             this.margin = (this.barWidth * 0.15) / 2;
+
+            // Scale array length to sort speed
+            this.sortSpeed = ((this.arrayLength - 20) * (999)) / 180 + 1;
+            this.sortSpeed = 1000 - this.sortSpeed;
         },
         sort: async function() {
+            this.sorting = true;
             switch(this.sortAlgorithm) {
                 case 'bubble':
-                    await bubbleSort(this.array);
+                    await bubbleSort(this.array, this.sortSpeed, this.colorArray, this.colorMap);
                     break;
                 case 'merge':
-                    await mergeSort(this.array, 0, this.array.length - 1);
+                    await mergeSort(this.array, 0, this.array.length - 1, this.sortSpeed);
                     break;
                 case 'insertion':
-                    await insertionSort(this.array);
+                    await insertionSort(this.array, this.sortSpeed);
                     break;
                 case 'binary':
-                    await binaryInsertionSort(this.array);
+                    await binaryInsertionSort(this.array, this.sortSpeed);
                     break;
             }
+            this.sorting = false
         }
     },
     watch: {

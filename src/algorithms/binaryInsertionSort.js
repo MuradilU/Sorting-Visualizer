@@ -1,6 +1,6 @@
 import { replace } from '../utils/mutators'
 
-async function binaryInsertionSort(array) {
+async function binaryInsertionSort(array, speed) {
     let value, sortedIndex, locToInsert;
     for (let i = 1; i < array.length; i++) {
         value = array[i];
@@ -8,10 +8,10 @@ async function binaryInsertionSort(array) {
         locToInsert = binarySearch(array, value, 0, sortedIndex);
 
         while (sortedIndex >= locToInsert) {
-            await replace(array, sortedIndex + 1, array[sortedIndex]);
+            await replace(array, sortedIndex + 1, array[sortedIndex], speed);
             sortedIndex--;
         }
-        await replace(array, locToInsert, value);
+        await replace(array, locToInsert, value, speed);
     }
 }
 
