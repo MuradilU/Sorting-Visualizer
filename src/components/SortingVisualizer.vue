@@ -95,11 +95,13 @@ export default {
         },
         sort: async function() {
             this.sorting = true;
+            console.log("Before algo", this.sortSpeed);
             switch(this.sortAlgorithm) {
                 case 'bubble':
                     await bubbleSort(this.array, this.sortSpeed, this.colorArray, this.colorMap);
                     break;
                 case 'merge':
+                    // console.log(this.sortSpeed);
                     await mergeSort(this.array, 0, this.array.length - 1, this.sortSpeed);
                     break;
                 case 'insertion':

@@ -3,8 +3,8 @@ import { replace } from '../utils/mutators'
 async function mergeSort(array, left, right, speed) {
     if (right > left) {
         let mid = Math.floor((left + right) / 2);
-        await mergeSort(array, left, mid);
-        await mergeSort(array, mid + 1, right);
+        await mergeSort(array, left, mid, speed);
+        await mergeSort(array, mid + 1, right, speed);
 
         await merge(array, left, mid, right, speed);
     }
