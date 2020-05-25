@@ -1,24 +1,5 @@
-# sorting-visualizer
+# Sorting-Visualizer
 
-## Project setup
-```
-npm install
-```
+Sorting visualizer that implements **Merge sort**, **Bubble sort**, **Insertion sort**, and **Binary Insertion sort**
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+[muradilu.github.io/sorting-visualizer](https://muradilu.github.io/sorting-visualizer/)
