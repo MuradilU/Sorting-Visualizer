@@ -6,9 +6,13 @@
             <input class="sort-checkbox" type="radio" :id="algorithm.id" name="sortAlgorithm" :value="algorithm.id" v-model="sortAlgorithm">
             <label class="sort-label" :for="algorithm.id">{{ algorithm.name }}</label>
         </div>
-        <span class="slider-label">Length and Speed:</span>
+        <span class="slider-label">Length:</span>
         <div class="slider-container">
             <input class="slider" type="range" id="length" min="5" max="200" v-model="arrayLength">
+        </div>
+        <span class="slider-label">Speed:</span>
+        <div class="slider-container">
+            <input class="slider" type="range" id="speed" min="1" max="1000" v-model="speedSlider">
         </div>
         <button class="reset" @click="initVisualizer">Reset</button>
         <button class="sort" @click="sort" :disabled="sorting">Sort</button>
@@ -61,13 +65,14 @@ export default {
             heightScale: Number,
             barWidth: Number,
             arrayLength: 20,
-            sortSpeed: 0,
+            speedSlider: 200,
+            sortSpeed: 800,
             margin: Number,
             colorMap: new Map([
                 ['comparing', '#80FF72'],
                 ['replacing', '#E63946'],
                 ['searching', '#0099ff'],
-                ['regular', '#FF69B4']
+                ['regular', '#ff99cc']
             ])
         }
     },
@@ -87,10 +92,6 @@ export default {
             this.heightScale = this.containerHeight / max;
             this.barWidth = this.containerWidth / this.array.length;
             this.margin = (this.barWidth * 0.15) / 2;
-
-            // Scale array length to sort speed
-            this.sortSpeed = ((this.arrayLength - 20) * (999)) / 180 + 1;
-            this.sortSpeed = 1000 - this.sortSpeed;
         },
         sort: async function() {
             this.sorting = true;
@@ -115,6 +116,9 @@ export default {
         arrayLength: function(newLength) {
             this.arrayLength = parseInt(newLength);
             this.initVisualizer();
+        },
+        speedSlider: function(newSpeed) {
+            this.sortSpeed = 1000 - parseInt(newSpeed);
         }
     }
 }
