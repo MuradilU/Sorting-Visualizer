@@ -46,29 +46,39 @@ button:hover {
 button:disabled {
   border: 1px solid #ff3333;
   background-color: #ff3333;
-  /* color: #666666;   */
 }
 .visualizer-container {
   margin: 5em auto;
   display: flex;
   align-items: flex-end;
-  /* border: 2px solid grey; */
+  justify-content: center;
 }
 .bar {
   display: inline-block;
-  /* background-color: coral; */
 }
 .nav {
   display: flex;
-  height: 60px;
+  flex-wrap: wrap;
+  min-height: 70px;
   padding: 5px;
   padding: 0 2em;
   align-items: center;
   background-color: #1ccfa6;
 }
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 1em 0;
+}
+.controls > * {
+  min-width: calc(33% - (30rem * 2));
+  max-width: 100%;
+  flex-grow: 1;
+  flex-basis: calc( calc(30rem - 100%) * 999);
+}
 .sort-checkbox {
   display: none;
-
 }
 .sort-label {
   padding: 0.6em 0.8em;
@@ -84,8 +94,19 @@ button:disabled {
 .sort-checkbox:checked + .sort-label {
   color: #fff;
 }
-.sort-alg + .sort-alg {
-  margin-left: 0.3em;
+.sort-algs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.sort-algs > * {
+  min-width: calc(33% - (25rem * 2));
+  max-width: 100%;
+  flex-grow: 1;
+  flex-basis: calc( calc(25rem - 100%) * 999);
+}
+.slider-container {
+  min-width: 20%;
 }
 .slider {
   -webkit-appearance: none;
@@ -118,13 +139,12 @@ button:disabled {
   cursor: pointer;
 }
 .slider-label {
-  margin: 0 0.5em 0 1.5em;
+  margin: 0 0.5em 0 1.2em;
   color: #D3D3D3;
   font-size: 1em;
   font-weight: bold;
 }
 .sort {
-  margin-left: auto;
   border: 1px solid #fff;
   border-radius: 5px;
 }

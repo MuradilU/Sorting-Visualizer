@@ -2,26 +2,30 @@
   <div>
       <div class="nav">
         <!-- <span class="title">Sorting Visualizer</span> -->
-        <div class="sort-alg" v-for="(algorithm, i) in algorithms" :key="i">
-            <input class="sort-checkbox" type="radio" :id="algorithm.id" name="sortAlgorithm" :value="algorithm.id" v-model="sortAlgorithm">
-            <label class="sort-label" :for="algorithm.id">{{ algorithm.name }}</label>
+        <div class="sort-algs">
+            <div class="sort-alg" v-for="(algorithm, i) in algorithms" :key="i">
+                <input class="sort-checkbox" type="radio" :id="algorithm.id" name="sortAlgorithm" :value="algorithm.id" v-model="sortAlgorithm">
+                <label class="sort-label" :for="algorithm.id">{{ algorithm.name }}</label>
+            </div>
         </div>
-        <span class="slider-label">Length:</span>
-        <div class="slider-container">
-            <input class="slider" type="range" id="length" min="5" max="200" v-model="arrayLength">
+        <div class="controls">
+            <span class="slider-label">Length:</span>
+            <div class="slider-container">
+                <input class="slider" type="range" id="length" min="5" max="200" v-model="arrayLength">
+            </div>
+            <span class="slider-label">Speed:</span>
+            <div class="slider-container">
+                <input class="slider" type="range" id="speed" min="1" max="1000" v-model="speedSlider">
+            </div>
+            <button class="reset" @click="initVisualizer">Reset</button>
+            <button class="sort" @click="sort" :disabled="sorting">Sort</button>
         </div>
-        <span class="slider-label">Speed:</span>
-        <div class="slider-container">
-            <input class="slider" type="range" id="speed" min="1" max="1000" v-model="speedSlider">
-        </div>
-        <button class="reset" @click="initVisualizer">Reset</button>
-        <button class="sort" @click="sort" :disabled="sorting">Sort</button>
       </div>
       <div
         class="visualizer-container"
         :style="{
           height: containerHeight + 'px',
-          width: containerWidth + 'px'
+          width: '100%'
         }">
           <div 
             v-for="(height, i) in array"
@@ -95,13 +99,11 @@ export default {
         },
         sort: async function() {
             this.sorting = true;
-            console.log("Before algo", this.sortSpeed);
             switch(this.sortAlgorithm) {
                 case 'bubble':
                     await bubbleSort(this.array, this.sortSpeed, this.colorArray, this.colorMap);
                     break;
                 case 'merge':
-                    // console.log(this.sortSpeed);
                     await mergeSort(this.array, 0, this.array.length - 1, this.sortSpeed);
                     break;
                 case 'insertion':
